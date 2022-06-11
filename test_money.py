@@ -1,10 +1,11 @@
 """
-TDD tutorial
+TDD tutorial: Tests
 """
 
-import operator
-from functools import reduce
 from unittest import TestCase, main
+
+from money import Money
+from portfolio import Portfolio
 
 
 class TestMoney(TestCase):
@@ -12,8 +13,6 @@ class TestMoney(TestCase):
         five_usd = Money(5, "USD")
         ten_usd = Money(10, "USD")
         self.assertEqual(ten_usd, five_usd.times(2))
-
-    def test_multiplication_eur(self):
         ten_eur = Money(10, "EUR")
         twenty_eur = ten_eur.times(2)
         self.assertEqual(20, twenty_eur.amount)
@@ -37,33 +36,6 @@ class TestMoney(TestCase):
         portfolio = Portfolio()
         portfolio.add(five_usd, ten_usd)
         self.assertEqual(fifteen_usd, portfolio.evaluate("USD"))
-
-
-class Money:
-    def __init__(self, amount, currency):
-        self.amount = amount
-        self.currency = currency
-
-    def __eq__(self, other):
-        return self.amount == other.amount and self.currency == other.currency
-
-    def times(self, multiplier):
-        return Money(self.amount * multiplier, self.currency)
-
-    def divide(self, divisor):
-        return Money(self.amount / divisor, self.currency)
-
-
-class Portfolio:
-    def __init__(self):
-        self.money = []
-
-    def add(self, *money):
-        self.money.extend(money)
-
-    def evaluate(self, currency):
-        total = reduce(operator.add, map(lambda m: m.amount, self.money), 0)
-        return Money(total, currency)
 
 
 if __name__ == "__main__":
