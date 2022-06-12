@@ -13,10 +13,12 @@ class Portfolio:
         self._eur_to_usd = 1.2
 
     def __convert(self, _money, _currency):
+        exchange_rates = {"EUR->USD": 1.2, "USD->KRW": 1100}
         if _money.currency == _currency:
             return _money.amount
         else:
-            return _money.amount * self._eur_to_usd
+            key = _money.currency + "->" + _currency
+            return _money.amount * exchange_rates[key]
 
     def add(self, *money):
         self.money.extend(money)

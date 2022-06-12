@@ -48,6 +48,17 @@ class TestMoney(TestCase):
             expected_value, actual_value, "%s != %s" % (expected_value, actual_value)
         )
 
+    def test_addition_usd_krw(self):
+        one_usd = Money(1, "USD")
+        eleven_hundred_krw = Money(1100, "KRW")
+        portfolio = Portfolio()
+        portfolio.add(one_usd, eleven_hundred_krw)
+        expected_value = Money(2200, "KRW")
+        actual_value = portfolio.evaluate("KRW")
+        self.assertEqual(
+            expected_value, actual_value, "%s != %s" % (expected_value, actual_value)
+        )
+
 
 if __name__ == "__main__":
     main()
