@@ -2,7 +2,6 @@
 Portfolio class defined here
 """
 
-from bank import Bank
 from money import Money
 
 
