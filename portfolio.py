@@ -1,36 +1,27 @@
 """
 Portfolio class defined here
 """
-import operator
-from functools import reduce
 
+from bank import Bank
 from money import Money
 
 
 class Portfolio:
-    def __init__(self):
+    def __init__(self) -> None:
         self.moneys = []
         self._eur_to_usd = 1.2
-
-    def __convert(self, _money, _currency):
-        exchange_rates = {"EUR->USD": 1.2, "USD->KRW": 1100}
-        if _money.currency == _currency:
-            return _money.amount
-        else:
-            key = _money.currency + "->" + _currency
-            return _money.amount * exchange_rates[key]
 
     def add(self, *money):
         self.moneys.extend(money)
 
-    def evaluate(self, currency):
+    def evaluate(self, bank, currency):
         total = 0.0
         failures = []
         for money in self.moneys:
             try:
-                total += self.__convert(money, currency)
-            except KeyError as err:
-                failures.append(err)
+                total += bank.convert(money, currency).amount
+            except Exception as exc:
+                failures.append(exc)
 
         if len(failures) == 0:
             return Money(total, currency)
