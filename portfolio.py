@@ -1,6 +1,7 @@
 """
 Portfolio class defined here
 """
+from typing import Union
 
 from money import Money
 
@@ -10,10 +11,10 @@ class Portfolio:
         self.moneys = []
         self._eur_to_usd = 1.2
 
-    def add(self, *money):
+    def add(self, *money) -> None:
         self.moneys.extend(money)
 
-    def evaluate(self, bank, currency):
+    def evaluate(self, bank, currency) -> Union[Money, None]:
         total = 0.0
         failures = []
         for money in self.moneys:

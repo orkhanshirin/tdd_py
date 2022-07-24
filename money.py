@@ -5,7 +5,7 @@ from typing import Any, Union
 
 
 class Money:
-    def __init__(self, amount: Union[int, float], currency: str):
+    def __init__(self, amount: Union[int, float], currency: str) -> None:
         self.amount = amount
         self.currency = currency
 

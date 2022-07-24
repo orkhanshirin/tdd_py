@@ -11,7 +11,7 @@ from portfolio import Portfolio
 
 
 class TestMoney(TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.bank = Bank()
         self.bank.add_exchange_rate("EUR", "USD", 1.2)
         self.bank.add_exchange_rate("USD", "KRW", 1100)
@@ -88,10 +88,9 @@ class TestMoney(TestCase):
         self.assertEqual(self.bank.convert(ten_eur, "USD"), Money(13, "USD"))
 
     def test_conversion_with_missing_exchange_rate(self) -> None:
-        bank = Bank()
         ten_eur = Money(10, "EUR")
         with self.assertRaisesRegex(Exception, "EUR->Kalganid"):
-            bank.convert(ten_eur, "Kalganid")
+            self.bank.convert(ten_eur, "Kalganid")
 
 
 if __name__ == "__main__":
