@@ -2,6 +2,7 @@
 TDD tutorial: Tests
 """
 
+from re import compile
 from unittest import TestCase, main
 
 from money import Money
@@ -58,6 +59,20 @@ class TestMoney(TestCase):
         self.assertEqual(
             expected_value, actual_value, "%s != %s" % (expected_value, actual_value)
         )
+
+    def test_addition_with_multi_missing_exchange_rates(self):
+        one_usd = Money(1, "USD")
+        one_eur = Money(1, "EUR")
+        one_krw = Money(1, "KRW")
+        portfolio = Portfolio()
+        portfolio.add(one_usd, one_eur, one_krw)
+        with self.assertRaisesRegex(
+            Exception,
+            compile(
+                "Missing exchange rate\(s\):\[USD\->Kalganid, EUR\->Kalganid, KRW\->Kalganid]"
+            ),
+        ):
+            portfolio.evaluate("Kalganid")
 
 
 if __name__ == "__main__":
